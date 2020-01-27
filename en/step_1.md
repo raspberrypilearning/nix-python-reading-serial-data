@@ -1,58 +1,93 @@
-## Introduction
+## Reading serial data  with Python
 
-Add project description here. What will learners be making?
+--- task ---
 
-### What you will make
+Open up a text editor or your preferred Python IDE
 
---- no-print ---
-Add instructions for using the embedded content here.
+--- /task ---
 
-<div class="scratch-preview">
-  <iframe allowtransparency="true" width="485" height="402" src="https://scratch.mit.edu/projects/embed/160619869/?autostart=false" frameborder="0"></iframe>
-</div>
---- /no-print ---
+--- task ---
 
---- print-only ---
-![Complete project](images/showcase_static.png)
---- /print-only ---
+To read serial data, you can use the Python serial library.
 
---- collapse ---
----
-title: What you will need
----
-### Hardware
+```python
+import serial
+```
 
-+ Describe hardware here
+--- /task ---
 
-### Software
+--- task ---
 
-+ Scratch 2.0 (either [online](http://rpf.io/scratchon) or [offline](http://rpf.io/scratchoff))
-+ Python 3
-+ This project can be completed in a web browser using [trinket.io](https://trinket.io/)
+You need to specify the serial port you art using when you create your serial object. For instance:
 
-### Downloads
+```python
+import serial
 
-+ [rpf.io/project-name-go](http://rpf.io/project-name-go){:target="_blank"}
+ser = serial.Serial('/dev/ttyUSB0')
+```
 
---- /collapse ---
+--- /task ---
 
---- collapse ---
----
-title: What you will learn
----
+--- task ---
 
-+ Two or three learning objectives
-+ ...should go here
+Additionally you may need to specify settings that are specific to the device that is communicating using the serial communication protocol.
 
---- /collapse ---
+```python
+ser = serial.Serial('dev/ttyUSB0',
+                    baudrate=9600,
+					parity=serial.PARITY_NONE,
+					stopbits=serial.STOPBITS_ONE)
+```
 
---- collapse ---
----
-title: Additional information for educators
----
+--- /task ---
 
-If you need to print this project, please use the [printer-friendly version](https://projects.raspberrypi.org/en/projects/project-name/print){:target="_blank"}.
+Bytes are sent from your device to your computer at a set frequency. Flow control for serial communication works on the principles of First In First Out (FIFO). So when you call `pmd.read()` you are reading the oldest byte in the input buffer.
 
-[Here is a link to the resources for this project](http://rpf.io/project-name-go).
+--- task ---
 
---- /collapse ---
+Add two lines to store and the print out the oldest byte in the input buffer
+
+```python
+data = pmd.read()
+print(byte)
+```
+--- /task ---
+	
+--- task ---
+
+If you want to read more than a single byte, you can specify how many bytes to read
+
+```python
+data = pmd.read(10)
+print(bytes)
+```
+--- /task ---
+
+Once you have read the bytes, they are removed from the input buffer.
+
+--- task ---
+
+If you need to clear the input buffer, to remove old data, you can use the following line.
+
+```python
+pmd.reset_output_buffer()
+```
+
+--- /task ---
+
+Lastly, although when you look at the bytes, they appear to be a string, the bytes object is in reality a series of integers. If you want to see the value of a single byte in your bytes object, you can index it directly.
+
+--- task ---
+
+Add the following lines to view the values of specific bytes. This will output the integer values of the bytes.
+
+```python
+first_byte = data[0]
+second_byte = data[1]
+
+print(first_byte, second_byte)
+```
+
+--- /task ---
+
+For more information on using the `pyserial` modules you can have a look at the documentation - https://pyserial.readthedocs.io/en/latest/
