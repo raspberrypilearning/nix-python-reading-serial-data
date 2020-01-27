@@ -2,6 +2,16 @@
 
 --- task ---
 
+To install use pip.
+
+```bash
+sudo pip3 install pyserial
+```
+
+--- /task ---
+
+--- task ---
+
 Open up a text editor or your preferred Python IDE
 
 --- /task ---
