@@ -1,5 +1,3 @@
-## Reading serial data  with Python
-
 --- task ---
 
 To install use pip.
